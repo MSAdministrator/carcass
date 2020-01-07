@@ -1,4 +1,7 @@
-# carcass
+<div class="d-flex h-100 justify-content-center align-items-center">
+  <h1><img src="images/hexasharp.svg" alt="carcass" width="100"/>arcass</h1>
+</div>
+
 carcass is a Python command line tool to generate python package scaffolding based on best practices
 
 ## Getting Started
