@@ -4,9 +4,13 @@ def parse_requirements(requirement_file):
     with open(requirement_file) as f:
         return f.readlines()
 
+version = {}
+with open("...carcass/utils/version.py") as fp:
+    exec(fp.read(), version)
+    
 setup(
     name='carcass',
-    version='0.0.1',
+    version=version['__version__'],
     packages=find_packages(exclude=['tests*']),
     license='MIT',
     description='A Python package to generate python package scaffolding based on best practices',

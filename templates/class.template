@@ -1,7 +1,7 @@
+{class_imports}
 
 
-
-class {name}(object):
+class {package_name}(object):
     
     __class_method = None
 
