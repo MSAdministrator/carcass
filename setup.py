@@ -5,7 +5,7 @@ def parse_requirements(requirement_file):
         return f.readlines()
 
 version = {}
-with open("...carcass/utils/version.py") as fp:
+with open("carcass/utils/version.py") as fp:
     exec(fp.read(), version)
     
 setup(
