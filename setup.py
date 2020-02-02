@@ -16,7 +16,7 @@ setup(
     description='A Python package to generate python package scaffolding based on best practices',
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    install_requires=parse_requirements('./requirements.txt'),
+    install_requires=parse_requirements('requirements.txt'),
     keywords=['scaffolding', 'scaffold', 'python'],
     url='https://github.com/msadministrator/carcass',
     author='MSAdministrator',
