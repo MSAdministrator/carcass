@@ -4,7 +4,7 @@ import tempfile
 import shutil
 import atexit
 
-from options import Options
+from carcass.options import Options
 from carcass import Carcass
 
 class readable_dir(argparse.Action):
@@ -17,12 +17,16 @@ class readable_dir(argparse.Action):
         else:
             raise argparse.ArgumentTypeError("readable_dir:{0} is not a readable dir".format(prospective_dir))
 
-def main(package_path, force=False):
+def carcass(package_path, force=False):
     configuration = {}
-    configuration['package_name'] = input('Enter your package name: ')
-    configuration['first_last'] = input('Enter your first and last name: ')
-    configuration['github_username'] = input('Enter your GitHub user name: ')
-    configuration['email_address'] = input('Enter your email address: ')
+    package_name = str(input('Enter your package name: '))
+    configuration['package_name'] = package_name 
+    first_last = str(input('Enter your first and last name: '))
+    configuration['first_last'] = first_last 
+    github_username = str(input('Enter your GitHub user name: '))
+    configuration['github_username'] = github_username 
+    email_address = str(input('Enter your email address: '))
+    configuration['email_address'] = email_address
     configuration['package_path'] = os.path.join(package_path, configuration['package_name'])
     configuration['class_imports'] = ''
 
@@ -71,7 +75,7 @@ setup_logging()
     carcass.create_package(configuration['package_path'], package)
 
 
-if __name__ == "__main__":
+def main(args=None):
     parser = argparse.ArgumentParser(description = 'carcass is a Python package to generate python package scaffolding based on best practices')
     parser.add_argument('-P', '--path', action=readable_dir, default=os.path.expanduser('~'), help='Path to generate template package')
    # parser.add_argument('-N', '--name', help='The package name to generate a template for')
@@ -80,4 +84,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     #if not args.name:
     #    raise Exception('Exiting because you must provide a name of your template python package.')
-    main(args.path, force=args.force)
+    carcass(args.path, force=args.force)
+
+
+if __name__ == "__main__":
+    main()

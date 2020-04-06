@@ -37,7 +37,7 @@ class Carcass(object):
         return content.format(**properties)
 
     def get_template_content(self, template):
-        dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        dir_path = os.path.dirname(os.path.realpath(__file__))
         full_path = os.path.join(dir_path, 'templates', template)
         f = open(os.path.abspath(full_path), "r")
         contents =f.read()

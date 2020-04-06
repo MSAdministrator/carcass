@@ -22,10 +22,12 @@ setup(
     author='MSAdministrator',
     author_email='rickardja@live.com',
     python_requires='>=2.6, !=3.0.*, !=3.1.*, !=3.2.*, <4',
-    entry_points = {
-        'console_scripts': ['carcass=carcass.command_line:main'],
+    entry_points={
+          'console_scripts': [
+              'carcass = carcass.__main__:main'
+          ]
     },
     package_data={
-        'templates':['*.template']
+        'carcass':  ['templates/*.template', 'templates/.gitignore.template']
     }
 )
