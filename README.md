@@ -1,3 +1,4 @@
+![Python package](https://github.com/MSAdministrator/carcass/workflows/Python%20package/badge.svg?branch=master)
 
 ![](images/carcass_logo.png)
 
