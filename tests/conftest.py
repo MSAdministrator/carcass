@@ -1,5 +1,7 @@
 import os
 import pytest
+import tempfile
+import shutil
 
 
 def pytest_configure():
@@ -49,8 +51,9 @@ setup_logging()
 
 
 @pytest.fixture(scope='session')
-def carcass_fixture(tmpdir_factory):
+def carcass_fixture():
+    dirpath = tempfile.mkdtemp()
     from carcass import Carcass
-    pytest.configuration['package_path'] = os.path.join(tmpdir_factory.mktemp(''), pytest.configuration['package_name'])
+    pytest.configuration['package_path'] = os.path.join(dirpath, pytest.configuration['package_name'])
     carcass = Carcass(pytest.configuration, force=True)
     return carcass
