@@ -10,11 +10,11 @@ class Carcass(object):
         self.force = force
         self.configuration = configuration
         self.package_name = configuration['package_name']
-        self.package_path = self.__create_directory(configuration['package_path'],name=configuration['package_name'])
+        self.package_path = self.__create_directory(configuration['package_path'], name=configuration['package_name'])
 
     def __create_directory(self, path, name=None):
         if name:
-            abs_path = os.path.abspath(os.path.join(path,name))
+            abs_path = os.path.abspath(os.path.join(path, name))
             if not os.path.exists(abs_path):
                 os.makedirs(abs_path)
             return abs_path
@@ -23,14 +23,13 @@ class Carcass(object):
             if not os.path.exists(abs_path):
                 os.makedirs(abs_path)
             return abs_path
-    
+
     def __get_variable_names(self, content):
         return [fn for _, fn, _, _ in Formatter().parse(content) if fn is not None]
 
     def __get_formatted_content(self, content):
         properties = {}
         for item in self.__get_variable_names(content):
-           # print(item)
             for key, value in self.configuration.items():
                 if key == item:
                     properties[key] = value
@@ -61,9 +60,7 @@ class Carcass(object):
     def create_package(self, root_directory, package_structure):
         for k, v in package_structure.items():
             if not isinstance(v, dict):
-                # write the file
                 self.__write_data(root_directory, k, v)
-            else: # it's another dict, so recurse
-                # add the key to the path
-                new_root = os.path.join(root_directory, k) # you'll need to import os
+            else:
+                new_root = os.path.join(root_directory, k)
                 self.create_package(new_root, v)

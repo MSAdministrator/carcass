@@ -1,13 +1,15 @@
 from setuptools import setup, find_packages
 
+
 def parse_requirements(requirement_file):
     with open(requirement_file) as f:
         return f.readlines()
 
+
 version = {}
 with open("carcass/utils/version.py") as fp:
     exec(fp.read(), version)
-    
+
 setup(
     name='carcass',
     version=version['__version__'],
