@@ -51,6 +51,6 @@ setup_logging()
 @pytest.fixture(scope='session')
 def carcass_fixture(tmpdir_factory):
     from carcass import Carcass
-    pytest.configuration['package_path'] = os.path.join(str(tmpdir_factory.mktemp('')), pytest.configuration['package_name'])
+    pytest.configuration['package_path'] = os.path.join(tmpdir_factory.mktemp(''), pytest.configuration['package_name'])
     carcass = Carcass(pytest.configuration, force=True)
     return carcass
