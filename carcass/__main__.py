@@ -4,7 +4,7 @@ import tempfile
 import shutil
 import atexit
 
-from carcass.options import Options
+from .options import Options
 from carcass import Carcass
 
 class readable_dir(argparse.Action):
@@ -49,6 +49,7 @@ def carcass(package_path, force=False):
     if options:
         package[configuration['package_name']]['utils'] = {}
         package[configuration['package_name']]['utils'].update({'__init__.py': 'utils_init.template'})
+        package[configuration['package_name']]['utils'].update({'version.py': 'version.template'})
         if 'Microsoft Graph OAuth2' in options:
             package[configuration['package_name']].update({'graphconnector.py': 'graphconnector.template'})
             requirements_list.append('requests')
@@ -64,6 +65,8 @@ def carcass(package_path, force=False):
             package['logger.yml'] = 'logger_yaml.template'
             requirements_list.append('pyyaml')
             configuration['init_imports'] = '''
+import logging
+
 from {package_name}.utils.logger import setup_logging
 setup_logging()
 '''.format(package_name=configuration['package_name'])
