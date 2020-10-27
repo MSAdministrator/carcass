@@ -3,7 +3,7 @@
 
 class {package_name}(object):
     
-    __class_method = None
+    __class_variable = None
 
     def __init__(self):
         pass

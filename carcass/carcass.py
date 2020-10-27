@@ -10,7 +10,7 @@ class Carcass(object):
         self.force = force
         self.configuration = configuration
         self.package_name = configuration['package_name']
-        self.package_path = self.__create_directory(configuration['package_path'], name=configuration['package_name'])
+        self.package_path = self.__create_directory(configuration['package_path'], name=configuration['package_name'].lower())
 
     def __create_directory(self, path, name=None):
         if name:

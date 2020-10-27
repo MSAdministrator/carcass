@@ -55,6 +55,7 @@ package_name
     .gitignore
     package_name
         __init__.py
+        __main__.py
         package_name.py
         connector.py
         utils
@@ -129,6 +130,10 @@ def test_creation_of_readme_template_exists(carcass_fixture):
     carcass = carcass_fixture.create_package(pytest.configuration['package_path'], pytest.package)
     assert os.path.exists(os.path.join(str(pytest.configuration['package_path']), 'README.md'))
 ```
+
+## Upcoming Additions
+
+[] Add Flask application template
 
 ## Contributing
 
