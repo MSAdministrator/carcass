@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  {package_name}-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "7001:7001"

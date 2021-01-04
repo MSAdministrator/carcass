@@ -1,0 +1,86 @@
+from flask import Flask, url_for, render_template
+from flask_session import Session
+from flask_mail import Mail
+from flask_api import FlaskAPI, status, exceptions
+from flask_api.renderers import HTMLRenderer
+from flask_api.decorators import set_renderers
+from flask_bootstrap import Bootstrap
+
+# import flask config class
+from .config import Config
+
+# import flask_nav which is used for flask_nav bootstrap navigation bar
+from flask_nav import Nav
+nav = Nav()
+
+
+# Creating FlaskAPI app based on __name__
+app = FlaskAPI(__name__)
+
+# Setting FlaskAPI config settings based on Config object (class)
+app.config.from_object(Config)
+
+# Passing FlaskAPI object to Bootstrap
+Bootstrap(app)
+
+# Example of using context_processor to generate a navbar menu in bootstrap
+# of all available routes within your application
+
+def __return_sorted_navbar_dict(value):
+    return_dict = {{}}
+    for key,val in dict(sorted(value.items())).items():
+        return_dict[key] = sorted(val, key = lambda i: i['name'])
+    return return_dict
+
+def has_no_empty_params(rule):
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
+@app.context_processor
+def site_map():
+    route_dict = {{}}
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {{}}))
+            key = url.lstrip('/').split('/')[0].replace('_',' ').capitalize()
+            if key not in route_dict:
+                route_dict[key] = []
+            route_dict[key].append({{
+                'path': url,
+                'name': url.split('/')[-1].capitalize()
+            }})
+    route_dict = __return_sorted_navbar_dict(route_dict)
+    return dict(route_dict=route_dict)
+
+
+# Default route for the application itself
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('index.html', title='{package_name}')
+
+# importing & registering blueprint from frontend 
+from .frontend.frontend import {package_name}_bp
+app.register_blueprint({package_name}_bp, url_prefix='/')
+
+# importing & registering blueprint from api 
+from .api.api import {package_name}_api_bp
+app.register_blueprint({package_name}_api_bp, url_prefix='/api')
+
+# Setting Session wrapper for flask app
+Session(app)
+
+
+
+# Setting common errors 
+# Typically this would be in their own errors.py but for simplicity 
+# setting these directly here
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html', funny_word='funny_word'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('500.html', funny_word='funny_word'), 500

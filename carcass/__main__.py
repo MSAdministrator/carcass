@@ -43,6 +43,31 @@ def carcass(package_path, force=False):
         package[configuration['package_name']]['utils'] = {}
         package[configuration['package_name']]['utils'].update({'__init__.py': 'utils_init.template'})
         package[configuration['package_name']]['utils'].update({'version.py': 'version.template'})
+        if 'Flask App' in options:
+            package['Dockerfile'] = 'flask/Dockerfile.template'
+            package['docker-compose.yml'] = 'flask/docker-compose.template'
+            package[configuration['package_name']]['app'] = {}
+            package[configuration['package_name']]['app'].update({'__init__.py': 'flask/flask.template'})
+            package[configuration['package_name']]['app'].update({'config.py': 'flask/flaskconfig.template'})
+            package[configuration['package_name']]['app']['templates'] = {
+                '404.html': 'flask/404.html',
+                '500.html': 'flask/500.html',
+                'base.html': 'flask/base.html',
+                'index.html': 'flask/index.html'
+            }
+            requirements_list.append('Flask')
+            requirements_list.append('Flask-API')
+            requirements_list.append('flask-wtf')
+            requirements_list.append('Flask-Session')
+            requirements_list.append('flask-bootstrap')
+            requirements_list.append('flask-nav')
+            requirements_list.append('gunicorn')
+            package[configuration['package_name']]['app']['api'] = {
+                'api.py': 'flask/flaskblueprint.template'
+            }
+            package[configuration['package_name']]['app']['frontend'] = {
+                'frontend.py': 'flask/flaskblueprint.template'
+            }
         if 'Microsoft Graph OAuth2' in options:
             package[configuration['package_name']].update({'graphconnector.py': 'graphconnector.template'})
             requirements_list.append('requests')

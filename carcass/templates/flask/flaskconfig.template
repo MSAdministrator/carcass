@@ -1,0 +1,7 @@
+import os, hashlib
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY', str(hashlib.sha512().hexdigest))
+    SESSION_TYPE = os.environ.get('SESSION_TYPE', 'filesystem')
