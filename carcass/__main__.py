@@ -11,15 +11,15 @@ from carcass import Carcass
 def carcass(package_path, force=False):
     configuration = {}
     package_name = str(input('Enter your package name: '))
-    configuration['package_name'] = package_name
-    configuration['package_name'].lower()
+
+    configuration['package_name'] = package_name.replace('-', '_').lower()
     first_last = str(input('Enter your first and last name: '))
     configuration['first_last'] = first_last 
     github_username = str(input('Enter your GitHub user name: '))
     configuration['github_username'] = github_username 
     email_address = str(input('Enter your email address: '))
     configuration['email_address'] = email_address
-    configuration['package_path'] = os.path.abspath(package_path)
+    configuration['package_path'] = os.path.abspath(os.path.join(package_path, configuration['package_name']))
     configuration['class_imports'] = ''
 
     pick_list = Options().pick()
@@ -36,7 +36,7 @@ def carcass(package_path, force=False):
     
     package[configuration['package_name']] = {
         '__init__.py': '__init__.template',
-        '{}.py'.format(configuration['package_name'].lower()): 'class.template',
+        '{}.py'.format(configuration['package_name'].replace('-', '_').lower()): 'class.template',
         '__main__.py': 'main.template'
     }
     if options:
