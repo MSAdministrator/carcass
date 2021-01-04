@@ -1,0 +1,35 @@
+FROM python:3.7-alpine AS builder
+
+COPY requirements.txt /
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev \
+ && pip install cython \
+ && apk del .build-deps
+
+RUN apk add --no-cache python3-dev libressl-dev musl-dev libffi-dev libpng-dev freetype-dev build-base jpeg-dev zlib-dev libxml2-dev
+RUN apk add --update --no-cache g++ gcc libxslt-dev
+RUN pip install --user --upgrade pip
+RUN pip install --user -r /requirements.txt
+ENV TZ="America/Chicago"
+
+FROM python:3.7-alpine
+RUN apk add --no-cache --virtual .build-deps gcc libc-dev libxslt-dev py3-lxml && \
+    apk add --no-cache libxslt && \
+    pip install --no-cache-dir lxml>=3.5.0 && \
+    apk del .build-deps
+ENV TZ="America/Chicago"
+COPY --from=builder /root/.local /root/.local
+COPY . /app
+WORKDIR /app
+
+RUN export PYTHONPATH=/app:$PYTHONPATH
+RUN python setup.py install
+
+#CMD [ "python", "/app/run.py" ]
+CMD ["gunicorn", \
+     "--threads", "3", \
+     "--access-logfile", "-", \
+     "--error-logfile", "-", \
+     "--timeout", "600", \
+     "--bind", "0.0.0.0:5000", \
+     "--graceful-timeout", "500", \
+     "{package_name}:app"]

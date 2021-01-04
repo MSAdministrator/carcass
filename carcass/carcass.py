@@ -9,8 +9,8 @@ class Carcass(object):
         self.class_options = []
         self.force = force
         self.configuration = configuration
-        self.package_name = configuration['package_name']
-        self.package_path = self.__create_directory(configuration['package_path'], name=configuration['package_name'].lower())
+        self.package_name = configuration['package_name'].replace('-', '_').lower()
+        self.package_path = self.__create_directory(configuration['package_path'], name=configuration['package_name'].replace('-', '_').lower())
 
     def __create_directory(self, path, name=None):
         if name:
@@ -30,9 +30,13 @@ class Carcass(object):
     def __get_formatted_content(self, content):
         properties = {}
         for item in self.__get_variable_names(content):
+            v = False
             for key, value in self.configuration.items():
                 if key == item:
+                    v = True
                     properties[key] = value
+            if not v:
+                properties[item] = ''
         return content.format(**properties)
 
     def get_template_content(self, template):
@@ -40,6 +44,8 @@ class Carcass(object):
         full_path = os.path.join(dir_path, 'templates', template)
         f = open(os.path.abspath(full_path), "r")
         contents =f.read()
+        if template.endswith('.html'):
+            return contents
         if self.configuration:
             if template == 'graphconnector.template':
                 return contents

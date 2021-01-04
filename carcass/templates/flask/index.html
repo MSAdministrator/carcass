@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/utils.html" as utils %}
+
+{% block app_content %}
+  <div class="jumbotron">
+    <h1>Welcome to {{ title }}</h1>
+    <p>{{ title }} was generated using Carcass</p>
+    <p>carcass is a Python package and command line tool to generate python package scaffolding.  See documentation for this Python package below.</p>
+    <p>
+      <a class="btn btn-lg btn-default" role="button"
+           href="https://github.com/MSAdministrator/carcass" >Show docs</a>
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <center>
+          <span class="glyphicon glyphicon-search" style="font-size:50px;"></span>
+          <div class="caption">
+            <h1 class="display-3">Search Around</h1>
+          </div>
+          <p>By using the Endpoints dropdown menu you can select defined routes.</p>
+        </center>
+        </div>
+    </div>
+  </div>
+{% endblock %}

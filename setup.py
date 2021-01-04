@@ -30,6 +30,11 @@ setup(
           ]
     },
     package_data={
-        'carcass':  ['templates/*.template', 'templates/.gitignore.template']
+        'carcass':  [
+            'templates/*.template', 
+            'templates/.gitignore.template', 
+            'templates/flask/*.template',
+            'templates/flask/*.html'
+            ]
     }
 )

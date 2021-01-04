@@ -1,0 +1,44 @@
+from flask import Blueprint, request, abort, jsonify, Response
+
+
+{package_name}_bp = Blueprint(
+    '{package_name}',
+    __name__
+)
+
+def validate_request(request):
+    auth_header = request.headers.get('{package_name}')
+    if auth_header:
+        return True
+    abort(401)
+
+@{package_name}_bp.errorhandler(401)
+def unauthorized(error):
+    return Response('Unauthorized to access this resource', 401, {{'Content-Type': 'application/json'}})
+
+@{package_name}_bp.route("/example", methods=['GET'])
+def example_get():
+    """
+    An example get route within Flask
+
+    Returns:
+        dict: Returns a dictionary object which is converted to json by flask-api
+    """
+    if validate_request(request):
+        return {{ 'success': True }}
+
+@{package_name}_bp.route("/example", methods=['POST'])
+def example_post(some_value='random_value'):
+    """
+    An example Post route within Flask
+
+    Args:
+        some_value (str, optional): Returns provided value. Defaults to 'random_value'.
+
+    Returns:
+        dict: Returns dict of provided value
+        
+    """
+    if validate_request(request):
+        return {{ 'some_value': some_value }}
+
