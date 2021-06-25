@@ -1,0 +1,6 @@
+from .utils.logger import LoggingBase
+
+
+class Core(metaclass=LoggingBase):
+
+    pass

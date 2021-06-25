@@ -23,7 +23,7 @@ setup(
     url='https://github.com/msadministrator/carcass',
     author='MSAdministrator',
     author_email='rickardja@live.com',
-    python_requires='>=2.6, !=3.0.*, !=3.1.*, !=3.2.*, <4',
+    python_requires='>=3.6, <4',
     entry_points={
           'console_scripts': [
               'carcass = carcass.__main__:main'

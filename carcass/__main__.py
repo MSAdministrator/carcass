@@ -79,8 +79,10 @@ def carcass(package_path, force=False):
             package[configuration['package_name']]['utils'].update({'exceptions.py': 'exceptions.template'})
             configuration['class_imports'] += 'from .utils.exceptions import IncorrectParameters\n'
         if 'Logger' in options:
+            package[configuration['package_name']]['data'] = {}
             package[configuration['package_name']]['utils'].update({'logger.py': 'logger.template'})
-            package['logger.yml'] = 'logger_yaml.template'
+            package[configuration['package_name']]['data']['logger.yml'] = 'logger_yaml.template'
+            package[configuration['package_name']]['core.py'] = 'core.template'
             requirements_list.append('pyyaml')
             configuration['init_imports'] = '''
 import logging
