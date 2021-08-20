@@ -19,7 +19,7 @@ def carcass(package_path, force=False):
     configuration['github_username'] = github_username 
     email_address = str(input('Enter your email address: '))
     configuration['email_address'] = email_address
-    configuration['package_path'] = os.path.abspath(os.path.join(package_path, configuration['package_name']))
+    configuration['package_path'] = os.path.abspath(os.path.join(package_path))
     configuration['class_imports'] = ''
 
     pick_list = Options().pick()
@@ -33,7 +33,19 @@ def carcass(package_path, force=False):
     package['.gitignore'] = '.gitignore.template'
     package['requirements.txt'] = 'requirements.template'
     package['setup.py'] = 'setup.template'
-    
+
+    package['.github'] = {
+        'ISSUE_TEMPLATE': {
+            'bug_report.md': 'bug_report.template',
+            'feature_request.md': 'feature_request.template'
+        },
+        'workflows': {
+            'macos.yml': 'macos.template',
+            'windows.yml': 'windows.template',
+            'ubuntu.yml': 'ubuntu.template'
+        }
+    }
+
     package[configuration['package_name']] = {
         '__init__.py': '__init__.template',
         '{}.py'.format(configuration['package_name'].replace('-', '_').lower()): 'class.template',
