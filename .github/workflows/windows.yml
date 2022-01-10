@@ -1,4 +1,4 @@
-name: Testing {package_name} on Windows
+name: Testing atomic-operator on Windows
 
 on: 
   push

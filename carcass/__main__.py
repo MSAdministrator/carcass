@@ -33,6 +33,14 @@ def carcass(package_path, force=False):
     package['.gitignore'] = '.gitignore.template'
     package['requirements.txt'] = 'requirements.template'
     package['setup.py'] = 'setup.template'
+    package['mkdocs.yml'] = 'mkdocs.template'
+
+    package['docs'] = {
+        'README.md': 'README.template',
+        '{}-ref.md'.format(configuration['package_name'].replace('-', '_').lower()): 'class-ref-doc.template',
+        'CONTRIBUTING.md': 'CONTRIBUTING.template',
+        'LICENSE.md': 'LICENSE.template'
+    }
 
     package['.github'] = {
         'ISSUE_TEMPLATE': {
@@ -42,7 +50,9 @@ def carcass(package_path, force=False):
         'workflows': {
             'macos.yml': 'macos.template',
             'windows.yml': 'windows.template',
-            'ubuntu.yml': 'ubuntu.template'
+            'ubuntu.yml': 'ubuntu.template',
+            'publish.yml': 'publish_pypi.template',
+            'docs.yml': 'doc_generation.template'
         }
     }
 

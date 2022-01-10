@@ -29,14 +29,16 @@ class Carcass(object):
 
     def __get_formatted_content(self, content):
         properties = {}
-        for item in self.__get_variable_names(content):
-            v = False
-            for key, value in self.configuration.items():
-                if key == item:
-                    v = True
-                    properties[key] = value
-            if not v:
-                properties[item] = ''
+        variable_names = self.__get_variable_names(content)
+        if variable_names:
+            for item in variable_names:
+                v = False
+                for key, value in self.configuration.items():
+                    if key == item:
+                        v = True
+                        properties[key] = value
+                if not v:
+                    properties[item] = ''
         return content.format(**properties)
 
     def get_template_content(self, template):
@@ -45,6 +47,8 @@ class Carcass(object):
         f = open(os.path.abspath(full_path), "r")
         contents =f.read()
         if template.endswith('.html'):
+            return contents
+        elif template in ['doc_generation.template', 'publish_pypi.template']:
             return contents
         if self.configuration:
             if template == 'graphconnector.template':
