@@ -1,4 +1,4 @@
-name: Testing {package_name} on macOS
+name: Testing carcass on macOS
 
 on: 
   push

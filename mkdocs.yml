@@ -1,0 +1,32 @@
+site_name: carcass
+site_description: This python package to scaffold Python packages based on best practices.
+docs_dir: docs
+theme:
+  name: 'material'
+nav:
+    - Home: 'index.md'
+    - Documentation:
+        - 'Get Atomics': 'atomics.md'
+        
+    - Code Reference:
+        'Atomic Operator': 'atomic-operator-ref.md'
+        'Data Models': 'models-ref.md'
+        'Executors': 'execution-ref.md'
+    - About:
+        - 'License': 'LICENSE.md'
+        - 'Contributing': 'CONTRIBUTING.md'
+        - 'Changelog': 'CHANGELOG.md'
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            filters:
+              - "!^_"  # exlude all members starting with _
+              - "^__init__$"  # but always include __init__ modules and methods
+  - mike:
+      version_selector: true
+extra:
+  version:
+    provider: mike
